@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="submitForm">
+  <form @submit.prevent="">
     <label>
       <span>Name</span>
       <input v-model="user.name" type="text">
@@ -8,15 +8,15 @@
       <span>Age</span>
       <input v-model="user.age" type="number">
     </label>
-    <button-submit-hoc type="submit" >Submit</button-submit-hoc>
+    <button-submit-hoc :user="user" @click.native="submitForm">Submit</button-submit-hoc>
   </form>
 </template>
 
 <script>
-import Button from "./global/Button"
+import Btn from "./global/Btn";
 import { WithSubmitBtn } from "./hoc/WithSubmitBtn"
 
-const ButtonSubmitHoc = WithSubmitBtn(Button)
+const ButtonSubmitHoc = WithSubmitBtn(Btn)
 
 export default {
   name: "FormHoc",
@@ -27,17 +27,12 @@ export default {
     return{
       user: {
         name: '',
-        age: null
+        age: ''
       }
     }
   },
   methods: {
-    submitForm(){
-      for(let key in this.user){
-        console.log(this.user[key])
-        localStorage[key] = this.user[key]
-      }
-    }
+    submitForm(){}
   }
 }
 </script>

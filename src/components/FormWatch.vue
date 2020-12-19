@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="submitForm"
+  <form @submit.prevent=""
         :style="{'background-color': form.bg, 'color': form.colorText }"
   >
     <div>
@@ -11,57 +11,54 @@
 
       <InputWatch
           v-for="(key, i) in showList"
-          :key="i"
+          :key="i + idItem"
           :label="i"
           @changeInput="changeInput"
-          v-model="showList[i]"
+          v-model="filter[i]"
       />
     </transition-group>
 
     <div>
-      <button type="button" v-show="showListCounter !== Object.keys(filter).length" @click="showListCounter = Object.keys(filter).length">Показать все фильтры</button>
-      <button type="button" v-show="showListCounter === Object.keys(filter).length" @click="showListCounter = 2">Скрыть фильтры</button>
-    </div>
-    <div>
-      <button-submit-hoc type="submit" >Submit</button-submit-hoc>
+      <button type="button" v-show="!isShowAll" @click="showListCounter = Object.keys(user).length">Показать все фильтры</button>
+      <button type="button" v-show="isShowAll" @click="showListCounter = 2">Скрыть фильтры</button>
     </div>
   </form>
 </template>
 
 <script>
-
-import Button from "./global/Button"
-import { WithSubmitBtn } from "./hoc/WithSubmitBtn"
-
-const ButtonSubmitHoc = WithSubmitBtn(Button)
-
 import InputWatch from "./watch/InputWatch";
 export default {
   name: "FormWatch",
-  components: {InputWatch, ButtonSubmitHoc},
+  components: {InputWatch},
+  props: {
+    user: {
+      type: Object,
+      require: true
+    }
+  },
   data(){
     return{
-      user:{
+      filter: {
         name: '',
         surname: '',
         age: '',
         gender: 'male',
         lang: 'RU'
       },
-      filter: {},
+      idItem: Math.floor(Math.random()*10000000),
       counter: 0,
-      showList: {},
-      showListCounter: 2
+      showList: {
+        name: '',
+        surname: ''
+      },
+      showListCounter: 2,
+      isShowAll: false
     }
   },
   inject:{
     form: {
       default:{}
     }
-  },
-  created() {
-    this.clearForm()
-    this.showInputs(this.showListCounter)
   },
   watch:{
     showListCounter:
@@ -70,28 +67,40 @@ export default {
       }
   },
   methods: {
-    submitForm(){
-      for(let key in this.showList){
-        console.log(this.showList[key])
+    changeInput(){
+      this.counter = 0
+      for (let key in this.filter){
+        if(this.filter[key] !== ''){
+          if(this.filter[key] !== this.user[key]){
+            this.counter++
+          }
+        }
       }
     },
-    changeInput(){
-        this.counter++
-    },
     clearForm(){
-      this.filter = Object.assign({}, this.user)
-      this.showInputs()
+      this.filter = {...this.user}
       this.counter = 0
     },
     showInputs(){
-      let count = 0
-      this.showList = {}
-      for (let key in this.filter){
-        if(count < this.showListCounter){
-          this.$set(this.showList, key, this.filter[key])
+      if(!this.isShowAll){
+        let count = Object.keys(this.filter).length + 1
+        for (let key in this.filter){
+          if(count < this.showListCounter){
+            this.$set(this.showList, key, this.filter[key])
+          }
+          count--
         }
-        count++
       }
+      else{
+        let count = Object.keys(this.filter).length - this.showListCounter
+        for (let key in this.filter){
+          if(count < this.showListCounter){
+            delete this.showList[key]
+          }
+          count--
+        }
+      }
+      this.isShowAll = !this.isShowAll
     }
   }
 }

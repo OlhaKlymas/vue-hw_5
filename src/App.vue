@@ -1,25 +1,35 @@
 <template>
   <div id="app">
-<!--    <FormHoc/>-->
-<!--    <FormWatch/>-->
+    <FormHoc/>
+    <FormWatch :user="user"/>
 <!--    <ThemeProv/>-->
-
-    <AnimeList/>
+<!--    <AnimeList/>-->
   </div>
 </template>
 
 <script>
-// import FormHoc from "./components/FormHoc";
-// import FormWatch from "./components/FormWatch";
+import FormHoc from "./components/FormHoc";
+import FormWatch from "./components/FormWatch";
 // import ThemeProv from "./components/ThemeProv";
-import AnimeList from "./components/AnimeList";
+// import AnimeList from "./components/AnimeList";
 export default {
   name: 'App',
   components: {
-    AnimeList,
+    // AnimeList,
     // ThemeProv,
-    // FormWatch,
-    // FormHoc
+    FormWatch,
+    FormHoc
+  },
+  data(){
+    return{
+      user:{
+        name: '',
+        surname: '',
+        age: '',
+        gender: 'male',
+        lang: 'RU'
+      }
+    }
   }
 }
 </script>

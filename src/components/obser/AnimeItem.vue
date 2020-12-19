@@ -1,42 +1,26 @@
 <template>
-  <div class="wrap-card">
-    <div class="card"
-         @click="showPopup"
-    >
+  <div class="wrap-card" @click="openPopup(item.mal_id)">
+    <div class="card">
       <div class="card-body">
         <img :src="item.image_url">
         <div class="card-title">{{item.title}}</div>
       </div>
     </div>
-
-    <AnimePopup
-        v-if="clicked"
-        :item="item"
-        @showPopup="showPopup"
-    />
   </div>
 </template>
 
 <script>
-import AnimePopup from "./AnimePopup";
+import { actions } from '@/store'
 export default {
   name: "AnimeItem",
-  components: {AnimePopup},
   props: {
     item: {
       type: Object,
       require: true
     }
   },
-  data(){
-    return{
-      clicked: false
-    }
-  },
-  methods: {
-    showPopup(){
-      this.clicked = !this.clicked
-    }
+  methods:{
+    ...actions
   }
 }
 </script>

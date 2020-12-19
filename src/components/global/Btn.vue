@@ -2,7 +2,6 @@
   <button
       :type="type"
       @click="$emit('btnHandler',  $event)"
-      :style="{'background-color': form.bgBtn, 'color': form.colorBtn }"
   >
     <slot></slot>
   </button>
@@ -10,16 +9,15 @@
 
 <script>
 export default {
-  name: "Button",
-  inject:{
-    form: {
-      default:{}
-    }
-  },
+  name: "Btn",
   props: {
     type: {
       type: String,
-      default: 'button'
+      default: 'submit'
+    },
+    user: {
+      type: Object,
+      require: true
     }
   }
 }

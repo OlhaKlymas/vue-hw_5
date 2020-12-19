@@ -1,19 +1,25 @@
 import Vue from 'vue'
 import axios from 'axios'
 
-const store = Vue.observable({
+export const store = Vue.observable({
     isLoaded: false,
-    animeArr: []
+    animeArr: [],
+    isOpened: false,
+    idForPopup: {}
 })
 
 export const mutations = {
     setIsLoaded: payload => store.isLoaded = payload,
-    setAnimeArr: payload => store.animeArr = payload
+    setIsOpened: payload => store.isOpened = payload,
+    setAnimeArr: payload => store.animeArr = payload,
+    setIdForPopup: payload => store.idForPopup = payload
 }
 
 export const getters = {
     isLoaded: () => store.isLoaded,
-    animeArr: () => store.animeArr
+    isOpened: () => store.isOpened,
+    animeArr: () => store.animeArr,
+    idForPopup: () => store.idForPopup
 }
 
 export const actions = {
@@ -22,5 +28,17 @@ export const actions = {
         const data = await axios.get('https://api.jikan.moe/v3/top/anime')
         mutations.setAnimeArr(data.data.top)
         mutations.setIsLoaded(true)
+    },
+    openPopup(id){
+        mutations.setIsOpened(true)
+        store.animeArr.map(item =>{
+            if(id === item.mal_id){
+                mutations.setIdForPopup(item)
+            }
+        })
+    },
+    hidePopup(){
+        mutations.setIsOpened(false)
+        mutations.setIdForPopup({})
     }
 }

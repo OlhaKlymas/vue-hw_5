@@ -2,34 +2,35 @@
   <div class="popup">
     <div class="container">
       <div class="card__body">
-        <h3 class="card__title">{{item.title}}</h3>
+        <h3 class="card__title">{{idForPopup.title}}</h3>
         <div class="card__content">
           <div class="card__img">
-            <img :src="item.image_url">
+            <img :src="idForPopup.image_url">
           </div>
           <div class="card__text">
-            <p>{{item.type}}</p>
-            <p>{{item.episodes}}</p>
-            <p>{{item.start_date}}</p>
-            <p>{{item.end_date}}</p>
-            <p>{{item.members}}</p>
-            <p>{{item.score}}</p>
+            <p>{{idForPopup.type}}</p>
+            <p>{{idForPopup.episodes}}</p>
+            <p>{{idForPopup.start_date}}</p>
+            <p>{{idForPopup.end_date}}</p>
+            <p>{{idForPopup.members}}</p>
+            <p>{{idForPopup.score}}</p>
           </div>
         </div>
       </div>
-      <button type="button" @click="$emit('showPopup')">Exit</button>
+      <button type="button" @click="hidePopup">Exit</button>
     </div>
   </div>
 </template>
 
 <script>
+import { actions, getters } from '@/store'
 export default {
-name: "AnimePopup",
-  props: {
-    item: {
-      type: Object,
-      require: true
-    }
+  name: "AnimePopup",
+  computed: {
+    ...getters
+  },
+  methods:{
+    ...actions
   }
 }
 </script>
