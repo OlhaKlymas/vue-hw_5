@@ -6,7 +6,7 @@
   </div>
 
   <componentn :is="theme">
-    <form-watch></form-watch>
+    <slot></slot>
   </componentn>
 </div>
 </template>
@@ -32,5 +32,7 @@ export default {
 </script>
 
 <style scoped>
-
+  .btn-group{
+    text-align: center;
+  }
 </style>

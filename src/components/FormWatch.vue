@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent=""
-        :style="{'background-color': form.bg, 'color': form.colorText }"
+        :style="{'background-color': themeData.form.bg, 'color': themeData.form.colorText }"
   >
     <div>
       <span>{{counter}} полей изменено</span>
@@ -56,8 +56,10 @@ export default {
     }
   },
   inject:{
-    form: {
-      default:{}
+    themeData: {
+      form: {
+        default:{}
+      }
     }
   },
   watch:{

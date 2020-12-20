@@ -8,7 +8,7 @@
       <span>Age</span>
       <input v-model="user.age" type="number">
     </label>
-    <button-submit-hoc :user="user" @click.native="submitForm">Submit</button-submit-hoc>
+    <button-submit-hoc :user="user">Submit</button-submit-hoc>
   </form>
 </template>
 
@@ -30,9 +30,6 @@ export default {
         age: ''
       }
     }
-  },
-  methods: {
-    submitForm(){}
   }
 }
 </script>

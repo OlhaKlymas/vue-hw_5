@@ -6,7 +6,7 @@
              :value="value"
              @input="$emit('input', $event.target.value)"
              @change="$emit('changeInput')"
-             :style="{'background-color': form.bgInput, 'color': form.colorInput }"
+             :style="{'background-color': themeData.form.bgInput, 'color': themeData.form.colorInput }"
       />
     </label>
   </div>
@@ -16,8 +16,10 @@
 export default {
   name: "InputWatch",
   inject:{
-    form: {
-    default:{}
+    themeData: {
+      form: {
+        default:{}
+      }
     }
   },
   props: {
